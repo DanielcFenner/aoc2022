@@ -6,24 +6,29 @@ let score = 0;
 
 for (const line of file) {
   let pairMinMax = getPairMinMax(line);
-  let minA = pairMinMax[0];
-  let maxA = pairMinMax[1];
-  let minB = pairMinMax[2];
-  let maxB = pairMinMax[3];
 
-  if (rangeCheck(minA, maxA, minB, maxB)) {
+  if (rangeCheck(pairMinMax)) {
     score++;
   }
 }
 
 console.log(score);
 
-function rangeCheck(minA, maxA, minB, maxB) {
-  if ((minA <= minB && maxA >= maxB) || (minB <= minA && maxB >= maxA)) {
-    return true;
-  } else {
-    return false;
+function rangeCheck(pairMinMax) {
+  let range = [];
+
+  for (let i = pairMinMax[0]; i <= pairMinMax[1]; i++) {
+    range.push(i);
   }
+
+  for (let i = pairMinMax[2]; i <= pairMinMax[3]; i++) {
+    range.push(i);
+  }
+
+  let originalLength = range.length;
+  let uniqueLength = new Set(range).size;
+
+  return originalLength !== uniqueLength;
 }
 
 function getPairMinMax(line) {
